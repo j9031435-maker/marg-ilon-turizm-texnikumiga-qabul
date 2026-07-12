@@ -304,16 +304,32 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynfIysMS5Td4ai
 function isBackendConfigured(){
   return APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === -1;
 }
+/* ---------------- 100% CORS-Safe GET calls via JSONP ---------------- */
 async function apiGet(params){
   if(!isBackendConfigured()) return {error:'not_configured'};
-  try{
+  return new Promise((resolve) => {
+    const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      const scriptEl = document.getElementById(callbackName);
+      if(scriptEl) scriptEl.remove();
+      resolve(data);
+    };
+    
     const url = new URL(APPS_SCRIPT_URL);
     Object.keys(params).forEach(k=>url.searchParams.set(k, params[k]));
-    const res = await fetch(url.toString());
-    const text = await res.text();
-    try{ return JSON.parse(text); }
-    catch(parseErr){ return {error:'bad_response', detail:text.slice(0,300), status:res.status}; }
-  }catch(e){ return {error:'network', detail:String(e)}; }
+    url.searchParams.set('callback', callbackName);
+    
+    const script = document.createElement('script');
+    script.id = callbackName;
+    script.src = url.toString();
+    script.onerror = function() {
+      delete window[callbackName];
+      script.remove();
+      resolve({error: 'network', detail: 'JSONP request failed'});
+    };
+    document.body.appendChild(script);
+  });
 }
 /* ---------------- storage helpers using Apps Script Backend GET ---------------- */
 async function loadApplications(){
