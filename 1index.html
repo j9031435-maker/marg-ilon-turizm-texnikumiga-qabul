@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marg'ilon turizm va madaniy meros texnikumi — Onlayn qabul jarayoni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1F3A5F;
+  --ink-deep:#152A44;
+  --pomegranate:#B23A2E;
+  --pomegranate-deep:#8C2C22;
+  --ochre:#D9A441;
+  --ochre-deep:#B8842C;
+  --teal:#3E7C6B;
+  --cream:#F6F1E4;
+  --paper:#FCFAF3;
+  --charcoal:#2B2420;
+  --muted:#6E6455;
+  --line:rgba(31,58,95,0.16);
+  --success-bg:#E7F1EA;
+  --success-tx:#2C6B4A;
+  --warn-bg:#FBF0DC;
+  --warn-tx:#8A5B12;
+  --danger-bg:#F8E4E1;
+  --danger-tx:#8C2C22;
+  --new-bg:#E5EBF3;
+  --new-tx:#1F3A5F;
+  --radius:10px;
+  --shadow:0 2px 14px rgba(31,58,95,0.08);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Manrope',sans-serif;
+  background:var(--cream);
+  color:var(--charcoal);
+  line-height:1.55;
+}
+h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+a{color:inherit;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+/* ikat pattern strip */
+.ikat-strip{width:100%;height:14px;display:block;}
+.ikat-strip.tall{height:22px;}
+/* header */
+.site-header{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1120px;margin:0 auto;gap:16px;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand-mark{width:42px;height:42px;border-radius:8px;background:var(--ink);flex-shrink:0;position:relative;overflow:hidden;}
+.brand-mark svg{width:100%;height:100%;}
+.brand-text .t1{font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--ink);line-height:1.2;}
+.brand-text .t2{font-size:12px;color:var(--muted);}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:14px;font-weight:600;color:var(--charcoal);text-decoration:none;}
+.nav-links a:hover{color:var(--pomegranate);}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 20px;border-radius:var(--radius);border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);font-weight:700;font-size:14px;
+  white-space:nowrap;transition:all .15s ease;
+}
+.btn:hover{background:var(--ink);color:#fff;}
+.btn-primary{background:var(--pomegranate);border-color:var(--pomegranate);color:#fff;}
+.btn-primary:hover{background:var(--pomegranate-deep);border-color:var(--pomegranate-deep);}
+.btn-gold{background:var(--ochre);border-color:var(--ochre);color:var(--ink-deep);}
+.btn-gold:hover{background:var(--ochre-deep);border-color:var(--ochre-deep);}
+.btn-ghost{border-color:var(--line);color:var(--charcoal);}
+.btn-ghost:hover{background:var(--ink);border-color:var(--ink);color:#fff;}
+.btn-sm{padding:8px 14px;font-size:13px;}
+.btn-block{width:100%;}
+.btn[disabled]{opacity:0.55;cursor:not-allowed;}
+.btn[disabled]:hover{background:inherit;color:inherit;}
+/* hero */
+.hero{background:var(--ink);position:relative;overflow:hidden;padding:64px 0 56px;}
+.hero-inner{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:2;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(217,164,65,0.16);color:var(--ochre);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:22px;}
+.hero h1{color:#fff;font-size:44px;line-height:1.12;max-width:680px;margin:0 0 18px;}
+.hero p.lead{color:rgba(255,255,255,0.78);font-size:17px;max-width:560px;margin:0 0 30px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px;}
+.hero-stats{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.16);padding-top:24px;}
+.hero-stat{padding-right:36px;margin-right:36px;border-right:1px solid rgba(255,255,255,0.16);}
+.hero-stat:last-child{border-right:none;}
+.hero-stat .num{font-family:'Fraunces',serif;font-size:26px;color:var(--ochre);font-weight:600;}
+.hero-stat .lbl{font-size:12.5px;color:rgba(255,255,255,0.65);}
+/* sections */
+section.block{padding:56px 0;}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap;}
+.section-head h2{font-size:28px;margin:0 0 6px;color:var(--ink-deep);}
+.section-head p{margin:0;color:var(--muted);font-size:14.5px;max-width:560px;}
+.group-label{display:flex;align-items:center;gap:12px;margin:36px 0 18px;}
+.group-label span{font-size:13px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--pomegranate);white-space:nowrap;}
+.group-label .rule{flex:1;height:1px;background:var(--line);}
+.group-label:first-child{margin-top:0;}
+.dir-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.dir-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  padding:22px 22px 20px;position:relative;overflow:hidden;
+  border-image:linear-gradient(180deg,var(--ochre),var(--pomegranate) 55%,var(--teal)) 1 / 0 0 0 5px / 0 stretch;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .15s ease;
+}
+.dir-card:hover{transform:translateY(-2px);}
+.dir-icon{width:44px;height:44px;border-radius:9px;background:var(--cream);display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0;}
+.dir-icon svg{width:24px;height:24px;}
+.dir-card h3{font-size:18px;margin:0;color:var(--ink-deep);line-height:1.3;}
+.dir-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--new-bg);color:var(--new-tx);letter-spacing:0.02em;}
+.tag.dual{background:var(--warn-bg);color:var(--warn-tx);}
+.dir-card .spacer{flex:1;}
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;}
+.step .n{font-family:'Fraunces',serif;font-size:30px;color:var(--ochre-deep);font-weight:600;line-height:1;margin-bottom:10px;}
+.step h4{margin:0 0 6px;font-size:16px;color:var(--ink-deep);}
+.step p{margin:0;font-size:13.5px;color:var(--muted);}
+/* status check box */
+.status-box{background:var(--ink);border-radius:14px;padding:32px;color:#fff;display:flex;gap:28px;align-items:center;flex-wrap:wrap;}
+.status-box .txt{flex:1;min-width:240px;}
+.status-box h3{color:#fff;margin:0 0 6px;font-size:20px;}
+.status-box p{margin:0;color:rgba(255,255,255,0.72);font-size:13.5px;}
+.status-form{display:flex;gap:10px;flex-wrap:wrap;flex:1;min-width:260px;}
+.status-form input{flex:1;min-width:160px;}
+.status-result{margin-top:16px;padding:14px 16px;border-radius:10px;background:rgba(255,255,255,0.08);width:100%;font-size:13.5px;}
+/* news */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.news-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;}
+.news-card .date{font-size:12px;color:var(--pomegranate);font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:8px;}
+.news-card h4{margin:0 0 8px;font-size:16px;color:var(--ink-deep);}
+.news-card p{margin:0;font-size:13.5px;color:var(--muted);}
+.empty{padding:32px;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--line);border-radius:12px;}
+/* footer */
+footer{background:var(--ink-deep);color:rgba(255,255,255,0.7);padding:40px 0 28px;margin-top:20px;}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+footer h5{color:#fff;font-size:14px;margin:0 0 10px;font-family:'Manrope';font-weight:700;}
+footer p, footer a{font-size:13px;color:rgba(255,255,255,0.62);text-decoration:none;}
+footer .col{min-width:200px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.12);margin-top:28px;padding-top:18px;font-size:12px;color:rgba(255,255,255,0.45);}
+/* form */
+.form-shell{max-width:720px;margin:0 auto;}
+.form-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:32px;box-shadow:var(--shadow);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:13.5px;font-weight:700;color:var(--ink-deep);margin-bottom:7px;}
+.field .hint{font-size:12px;color:var(--muted);font-weight:400;margin-top:5px;}
+input[type=text],input[type=tel],input[type=date],input[type=password],select,textarea{
+  width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;
+  font-family:inherit;font-size:14px;color:var(--charcoal);background:#fff;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
+textarea{resize:vertical;min-height:90px;}
+.upload-box{border:1.5px dashed var(--line);border-radius:10px;padding:18px;text-align:center;background:#fff;position:relative;cursor:pointer;}
+.upload-box:hover{border-color:var(--ink);}
+.upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.upload-box .up-icon{color:var(--muted);margin-bottom:6px;}
+.upload-box .up-text{font-size:13px;color:var(--muted);}
+.upload-preview{margin-top:12px;display:flex;align-items:center;gap:12px;}
+.upload-preview img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);}
+.upload-preview .fname{font-size:12.5px;color:var(--charcoal);word-break:break-all;}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;}
+.checkbox-row input{margin-top:3px;}
+.checkbox-row label{font-size:13px;color:var(--muted);font-weight:400;}
+.form-error{background:var(--danger-bg);color:var(--danger-tx);padding:12px 14px;border-radius:8px;font-size:13.5px;margin-bottom:18px;}
+.chip-info{display:inline-flex;gap:8px;align-items:center;background:var(--cream);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-deep);margin-bottom:24px;}
+.success-card{max-width:560px;margin:0 auto;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:44px 32px;box-shadow:var(--shadow);}
+.success-icon{width:60px;height:60px;border-radius:50%;background:var(--success-bg);color:var(--success-tx);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.success-icon svg{width:30px;height:30px;}
+.ref-code{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ink-deep);background:var(--cream);padding:12px 20px;border-radius:10px;margin:18px 0;letter-spacing:0.02em;}
+/* admin */
+.admin-login-wrap{max-width:400px;margin:60px auto;}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;}
+.stat-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;}
+.stat-card .num{font-family:'Fraunces',serif;font-size:26px;color:var(--ink-deep);font-weight:600;}
+.stat-card .lbl{font-size:12px;color:var(--muted);}
+.tabs{display:flex;gap:6px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+.tab-btn{padding:11px 18px;font-size:14px;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;}
+.tab-btn.active{color:var(--ink-deep);border-color:var(--pomegranate);}
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.filter-btn{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12.5px;font-weight:700;color:var(--muted);}
+.filter-btn.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+.search-input{max-width:260px;}
+table.app-table{width:100%;border-collapse:collapse;background:var(--paper);border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+table.app-table th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line);background:var(--cream);}
+table.app-table td{padding:13px 14px;border-bottom:1px solid var(--line);font-size:13.5px;}
+table.app-table tr:last-child td{border-bottom:none;}
+table.app-table tr.row-clickable{cursor:pointer;}
+table.app-table tr.row-clickable:hover{background:var(--cream);}
+.status-badge{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.status-badge.yangi{background:var(--new-bg);color:var(--new-tx);}
+.status-badge.korib_chiqilmoqda{background:var(--warn-bg);color:var(--warn-tx);}
+.status-badge.qabul_qilindi{background:var(--success-bg);color:var(--success-tx);}
+.status-badge.rad_etildi{background:var(--danger-bg);color:var(--danger-tx);}
+.modal-overlay{position:fixed;inset:0;background:rgba(21,42,68,0.55);display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;overflow:auto;z-index:100;}
+.modal-card{background:#fff;border-radius:14px;max-width:640px;width:100%;padding:0;box-shadow:0 20px 50px rgba(0,0,0,0.25);}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line);}
+.modal-head h3{margin:0;font-size:18px;color:var(--ink-deep);}
+.modal-close{background:none;border:none;font-size:20px;color:var(--muted);padding:4px 8px;}
+.modal-body{padding:24px;max-height:70vh;overflow:auto;}
+.detail-row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+.detail-row:last-child{border-bottom:none;}
+.detail-row .k{color:var(--muted);}
+.detail-row .v{font-weight:600;text-align:right;}
+.doc-preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.doc-box{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;}
+.doc-box img{width:100%;height:140px;object-fit:cover;border-radius:6px;margin-bottom:8px;}
+.doc-box .doc-label{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:8px;}
+.status-actions{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0;}
+.status-actions button{flex:1;min-width:130px;}
+.news-admin-item{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:16px;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;}
+.news-admin-item h4{margin:0 0 4px;font-size:15px;}
+.news-admin-item p{margin:0;font-size:13px;color:var(--muted);}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink-deep);color:#fff;padding:14px 20px;border-radius:10px;font-size:13.5px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.2);max-width:320px;}
+@media (max-width:720px){
+  .hero h1{font-size:32px;}
+  .nav-links{display:none;}
+  .field-row{grid-template-columns:1fr;}
+  .doc-preview-grid{grid-template-columns:1fr;}
+  footer .wrap{flex-direction:column;}
+  .status-box{flex-direction:column;align-items:stretch;}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <pattern id="ikatMotif" width="40" height="24" patternUnits="userSpaceOnUse">
+      <rect width="40" height="24" fill="#1F3A5F"/>
+      <polygon points="0,12 10,0 20,12 10,24" fill="#D9A441"/>
+      <polygon points="20,12 30,0 40,12 30,24" fill="#B23A2E"/>
+      <polygon points="10,12 20,0 30,12 20,24" fill="#3E7C6B" fill-opacity="0.9"/>
+    </pattern>
+  </defs>
+</svg>
+<div id="app"></div>
+<script>
+/* ---------------- data ---------------- */
+const DIRECTIONS = [
+  {id:'hotel9', level:9, title:"Mehmonxona menejeri", mode:"Kunduzgi", icon:"hotel"},
+  {id:'chef9', level:9, title:"Oshpaz", mode:"Kunduzgi", icon:"chef"},
+  {id:'plumb9', level:9, title:"Turar joy infratuzilmasi servisi (Santexnik)", mode:"Kunduzgi", icon:"plumb"},
+  {id:'restaurant9', level:9, title:"Restoran va ovqatlanish xizmatlari servisi", mode:"Kunduzgi va Dual", icon:"restaurant"},
+  {id:'jewelry9', level:9, title:"Zargarlik", mode:"Kunduzgi", icon:"jewelry"},
+  {id:'it9', level:9, title:"Kompyuter tarmoqlari va IT-servis", mode:"Kunduzgi va Dual", icon:"it"},
+  {id:'hotel11', level:11, title:"Mehmonxona menejeri", mode:"Kunduzgi va Dual", icon:"hotel"},
+  {id:'tourism11', level:11, title:"Turizm", mode:"Kunduzgi", icon:"tourism"},
+  {id:'drone11', level:11, title:"Uchuvchisiz uchish qurilmalarini ekspluatatsiya qilish va boshqarish", mode:"Dual", icon:"drone"},
+];
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "Margilon2026";
+const STATUS_LABELS = {yangi:"Yangi", korib_chiqilmoqda:"Ko'rib chiqilmoqda", qabul_qilindi:"Qabul qilindi", rad_etildi:"Rad etildi"};
+/* ---------------- state ---------------- */
+const state = {
+  view: 'home',
+  selectedDirection: null,
+  isAdmin: false,
+  adminToken: null,
+  adminTab: 'apps',
+  apps: [],
+  news: [],
+  appsLoaded: false,
+  newsLoaded: false,
+  filterStatus: 'barchasi',
+  searchQuery: '',
+  openAppId: null,
+};
+const formFiles = { docData:null, docName:null, docMime:null, photoData:null };
+/* ---------------- helpers ---------------- */
+function esc(s){ return (s===undefined||s===null?'':s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDate(ts){ try{ return new Date(ts).toLocaleString('uz-UZ', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch(e){return '';} }
+function genId(){ return 'MRG-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random()*900+100); }
+function q(sel){ return document.querySelector(sel); }
+function ikatStrip(tall){ return `<svg class="ikat-strip${tall?' tall':''}" viewBox="0 0 400 24" preserveAspectRatio="none"><rect width="400" height="24" fill="url(#ikatMotif)"/></svg>`; }
+function toast(msg){
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 3200);
+}
+function icon(name){
+  const icons = {
+    hotel:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/><path d="M3 21h18"/></svg>',
+    chef:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 21h8"/><path d="M9 21v-6"/><path d="M15 21v-6"/><path d="M6 10a4 4 0 0 1 4-4 3 3 0 0 1 4 0 4 4 0 0 1 4 4c0 3-2 5-9 5s-3-2-3-5z"/></svg>',
+    plumb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a3 3 0 1 0-4.4 4.1L4 16.7V20h3.3l6.3-6.3a3 3 0 1 0 4.1-4.4z"/></svg>',
+    restaurant:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V2"/><path d="M8 12v10"/><path d="M17 2c-2 0-3 3-3 6s1 3 3 3 0 11 0 11"/></svg>',
+    jewelry:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l3 5-9 13L3 8z"/><path d="M3 8h18"/><path d="M9 3l3 5 3-5"/></svg>',
+    it:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>',
+    tourism:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/></svg>',
+    drone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="5" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M6.5 6.5L10 10M17.5 6.5L14 10M6.5 17.5L10 14M17.5 17.5L14 14"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>',
+  };
+  return icons[name] || icons.tourism;
+}
+/* ============================================================
+   MUHIM: Google Apps Script Web App manzilini shu yerga qo'ying.
+   ============================================================ */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynfIysMS5Td4ai-3WMLosP3XYNWRDZh_erSCfQMaWx7LJjfnoF2ZWrVD5N8coRufH05g/exec";
+function isBackendConfigured(){
+  return APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === -1;
+}
+async function apiGet(params){
+  if(!isBackendConfigured()) return {error:'not_configured'};
+  try{
+    const url = new URL(APPS_SCRIPT_URL);
+    Object.keys(params).forEach(k=>url.searchParams.set(k, params[k]));
+    const res = await fetch(url.toString());
+    const text = await res.text();
+    try{ return JSON.parse(text); }
+    catch(parseErr){ return {error:'bad_response', detail:text.slice(0,300), status:res.status}; }
+  }catch(e){ return {error:'network', detail:String(e)}; }
+}
+/* ---------------- storage helpers using Apps Script Backend GET ---------------- */
+async function loadApplications(){
+  if(!state.adminToken) return;
+  const res = await apiGet({action: 'listApplications', token: state.adminToken});
+  if(res && res.applications){
+    state.apps = res.applications;
+  } else {
+    state.apps = [];
+  }
+  state.appsLoaded = true;
+}
+async function loadNews(){
+  const res = await apiGet({action: 'listNews'});
+  if(res && res.news){
+    state.news = res.news;
+  } else {
+    state.news = [];
+  }
+  state.newsLoaded = true;
+}
+/* ---------------- render: shell ---------------- */
+function renderShell(inner, opts){
+  opts = opts || {};
+  return `
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand" data-action="go-home">
+        <div class="brand-mark">${ikatMark()}</div>
+        <div class="brand-text">
+          <div class="t1">Marg'ilon TMT</div>
+          <div class="t2">Turizm va madaniy meros texnikumi</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#yonalishlar" data-action="go-home-anchor" data-anchor="yonalishlar">Yo'nalishlar</a>
+        <a href="#yangiliklar" data-action="go-home-anchor" data-anchor="yangiliklar">Yangiliklar</a>
+        <a href="#holat" data-action="go-home-anchor" data-anchor="holat">Ariza holati</a>
+      </nav>
+      <button class="btn btn-ghost btn-sm" data-action="go-admin"><span>Xodim uchun kirish</span></button>
+    </div>
+    ${ikatStrip(false)}
+  </header>
+  ${inner}
+  <footer>
+    <div class="wrap">
+      <div class="col">
+        <h5>Marg'ilon turizm va madaniy meros texnikumi</h5>
+        <p>Onlayn qabul jarayoni orqali abituriyentlar hujjatlarini masofadan turib topshirishlari mumkin.</p>
+      </div>
+      <div class="col">
+        <h5>Bo'limlar</h5>
+        <p><a href="#yonalishlar" data-action="go-home-anchor" data-anchor="yonalishlar">Yo'nalishlar</a></p>
+        <p><a href="#yangiliklar" data-action="go-home-anchor" data-anchor="yangiliklar">Yangiliklar</a></p>
+        <p><a href="#holat" data-action="go-home-anchor" data-anchor="holat">Ariza holatini tekshirish</a></p>
+      </div>
+      <div class="col">
+        <h5>Xodimlar uchun</h5>
+        <p><a href="#" data-action="go-admin">Boshqaruv paneliga kirish</a></p>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">© ${new Date().getFullYear()} Marg'ilon turizm va madaniy meros texnikumi. Barcha huquqlar himoyalangan.</div>
+  </footer>`;
+}
+function ikatMark(){
+  return `<svg viewBox="0 0 42 42" width="42" height="42"><rect width="42" height="42" fill="#1F3A5F"/><polygon points="21,8 30,21 21,34 12,21" fill="#D9A441"/><polygon points="21,15 25,21 21,27 17,21" fill="#B23A2E"/></svg>`;
+}
+/* ---------------- render: home ---------------- */
+function renderHome(){
+  const g9 = DIRECTIONS.filter(d=>d.level===9);
+  const g11 = DIRECTIONS.filter(d=>d.level===11);
+  return renderShell(`
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">Onlayn qabul jarayoni 2026</div>
+        <h1>Kelajakdagi kasbingizga birinchi qadam — shu yerdan boshlanadi</h1>
+        <p class="lead">Marg'ilon turizm va madaniy meros texnikumiga hujjat topshirish endi onlayn. Yo'nalishni tanlang, hujjatlaringizni yuklang va natijani kuting — barchasi bir necha daqiqada.</p>
+        <div class="hero-actions">
+          <button class="btn btn-gold" data-action="go-home-anchor" data-anchor="yonalishlar">Yo'nalishni tanlash</button>
+          <button class="btn" style="border-color:rgba(255,255,255,0.35);color:#fff" data-action="go-home-anchor" data-anchor="holat">Ariza holatini tekshirish</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">9</div><div class="lbl">ta'lim yo'nalishi</div></div>
+          <div class="hero-stat"><div class="num">2</div><div class="lbl">ta'lim shakli: Kunduzgi / Dual</div></div>
+          <div class="hero-stat"><div class="num">100%</div><div class="lbl">onlayn hujjat topshirish</div></div>
+        </div>
+      </div>
+      ${ikatStrip(true)}
+    </section>
+    <section class="block wrap" id="yonalishlar">
+      <div class="section-head">
+        <div>
+          <h2>Ta'lim yo'nalishlari</h2>
+          <p>O'zingizga mos yo'nalishni tanlang va ariza topshirishni boshlang.</p>
+        </div>
+      </div>
+      <div class="group-label"><span>9-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+      <div class="dir-grid">${g9.map(dirCard).join('')}</div>
+      <div class="group-label"><span>11-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+      <div class="dir-grid">${g11.map(dirCard).join('')}</div>
+    </section>
+    <section class="block wrap">
+      <div class="section-head">
+        <div>
+          <h2>Qabul jarayoni qanday kechadi</h2>
+          <p>Ariza topshirishdan natijani bilishgacha uch bosqich.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h4>Yo'nalishni tanlang</h4><p>Sinfingiz va qiziqishingizga mos kasbiy yo'nalishni tanlang.</p></div>
+        <div class="step"><div class="n">02</div><h4>Hujjatlarni yuklang</h4><p>Shaxsni tasdiqlovchi hujjat, 3:4 o'lchamdagi rasm va telefon raqamingizni qoldiring.</p></div>
+        <div class="step"><div class="n">03</div><h4>Natijani kuting</h4><p>Texnikum xodimi arizangizni ko'rib chiqib, ariza raqamingiz orqali natijani bildiradi.</p></div>
+      </div>
+    </section>
+    <section class="block wrap" id="holat">
+      <div class="status-box">
+        <div class="txt">
+          <h3>Ariza holatini tekshirish</h3>
+          <p>Ariza topshirganingizda olgan ariza raqamingizni kiriting.</p>
+        </div>
+        <div style="flex:2;min-width:260px;">
+          <div class="status-form">
+            <input type="text" id="statusIdInput" placeholder="Masalan: MRG-XXXXXX-000">
+            <button class="btn btn-gold" data-action="check-status">Tekshirish</button>
+          </div>
+          <div id="statusResult"></div>
+        </div>
+      </div>
+    </section>
+    <section class="block wrap" id="yangiliklar">
+      <div class="section-head">
+        <div>
+          <h2>Yangiliklar</h2>
+          <p>Qabul jarayoni bilan bog'liq so'nggi e'lonlar.</p>
+        </div>
+      </div>
+      <div id="newsContainer"><div class="empty">Yuklanmoqda...</div></div>
+    </section>
+  `);
+}
+function dirCard(d){
+  return `<div class="dir-card">
+    <div class="dir-icon">${icon(d.icon)}</div>
+    <h3>${esc(d.title)}</h3>
+    <div class="dir-tags">
+      <span class="tag">${d.level}-sinf bitiruvchilari uchun</span>
+      <span class="tag ${d.mode.includes('Dual')?'dual':''}">${esc(d.mode)}</span>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn btn-primary btn-block" data-action="apply" data-dir="${d.id}">Ariza topshirish</button>
+  </div>`;
+}
+async function renderNewsSection(){
+  if(!state.newsLoaded) await loadNews();
+  const el = document.getElementById('newsContainer');
+  if(!el) return;
+  if(state.news.length===0){
+    el.innerHTML = `<div class="empty">Hozircha yangiliklar yo'q. Tez orada bu yerda qabul jarayoni haqida e'lonlar chop etiladi.</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="news-grid">${state.news.map(n=>`
+    <div class="news-card">
+      <div class="date">${esc(new Date(n.createdAt).toLocaleDateString('uz-UZ'))}</div>
+      <h4>${esc(n.title)}</h4>
+      <p>${esc(n.body)}</p>
+    </div>`).join('')}</div>`;
+}
+/* ---------------- render: apply form ---------------- */
+function renderApply(){
+  const dir = DIRECTIONS.find(d=>d.id===state.selectedDirection);
+  if(!dir){ return renderHome(); }
+  formFiles.docData=null; formFiles.docName=null; formFiles.docMime=null; formFiles.photoData=null;
+  return renderShell(`
+    <section class="block wrap">
+      <button class="btn btn-ghost btn-sm" data-action="go-home" style="margin-bottom:22px;">&larr; Yo'nalishlarga qaytish</button>
+      <div class="form-shell">
+        <div class="chip-info">${icon(dir.icon).replace('viewBox="0 0 24 24"','viewBox="0 0 24 24" width="16" height="16"')} ${esc(dir.title)} · ${dir.level}-sinf · ${esc(dir.mode)}</div>
+        <div class="form-card">
+          <h2 style="margin-top:0;font-size:22px;">Ariza anketasi</h2>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:-8px;margin-bottom:24px;">Barcha maydonlarni to'liq va aniq to'ldiring.</p>
+          <div id="formError"></div>
+          <div class="field-row">
+            <div class="field">
+              <label>F.I.Sh (to'liq)</label>
+              <input type="text" id="fFullName" placeholder="Familiya Ism Sharif">
+            </div>
+            <div class="field">
+              <label>Tug'ilgan sana</label>
+              <input type="date" id="fBirthDate">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Telefon raqam</label>
+              <input type="tel" id="fPhone" placeholder="+998 90 123 45 67">
+            </div>
+            <div class="field">
+              <label>Hujjat turi</label>
+              <select id="fDocType">
+                <option value="Pasport">Pasport</option>
+                <option value="ID karta">ID karta</option>
+                <option value="Tug'ilganlik guvohnomasi">Tug'ilganlik guvohnomasi</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Shaxsni tasdiqlovchi hujjat yoki tug'ilganlik guvohnomasi nusxasi</label>
+            <div class="upload-box" id="docUploadBox">
+              <input type="file" id="fDocFile" accept="image/*,.pdf" data-file-role="doc">
+              <div class="up-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M4 17v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+              <div class="up-text">Rasm yoki PDF faylni yuklash uchun bosing</div>
+            </div>
+            <div id="docPreview"></div>
+          </div>
+          <div class="field">
+            <label>3:4 o'lchamdagi rasm</label>
+            <div class="upload-box" id="photoUploadBox">
+              <input type="file" id="fPhotoFile" accept="image/*" data-file-role="photo">
+              <div class="up-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M4 17v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+              <div class="up-text">3:4 formatdagi hujjat suratini yuklang</div>
+            </div>
+            <div id="photoPreview"></div>
+          </div>
+          <div class="field checkbox-row">
+            <input type="checkbox" id="fConsent">
+            <label for="fConsent">Shaxsiy ma'lumotlarim (hujjat va rasm) qabul jarayoni maqsadida texnikum tomonidan qayta ishlanishiga roziman.</label>
+          </div>
+          <button class="btn btn-primary btn-block" id="submitAppBtn" data-action="submit-app">Arizani yuborish</button>
+        </div>
+      </div>
+    </section>
+  `);
+}
+function renderSuccess(refId){
+  return renderShell(`
+    <section class="block wrap">
+      <div class="success-card">
+        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2 style="margin:0 0 8px;">Arizangiz qabul qilindi</h2>
+        <p style="color:var(--muted);font-size:14px;margin:0;">Ariza raqamingizni saqlab qo'ying — u orqali arizangiz holatini tekshirishingiz mumkin.</p>
+        <div class="ref-code">${esc(refId)}</div>
+        <button class="btn btn-primary" data-action="go-home">Bosh sahifaga qaytish</button>
+      </div>
+    </section>
+  `);
+}
+/* ---------------- render: admin ---------------- */
+function renderAdminLogin(errorMsg){
+  return renderShell(`
+    <section class="block wrap">
+      <div class="admin-login-wrap">
+        <div class="form-card">
+          <h2 style="margin-top:0;font-size:20px;">Xodim uchun kirish</h2>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:-6px;">Arizalarni ko'rib chiqish uchun tizimga kiring.</p>
+          ${errorMsg?`<div class="form-error">${esc(errorMsg)}</div>`:''}
+          <div class="field">
+            <label>Login</label>
+            <input type="text" id="adminUser" placeholder="Login">
+          </div>
+          <div class="field">
+            <label>Parol</label>
+            <input type="password" id="adminPass" placeholder="Parol">
+          </div>
+          <button class="btn btn-primary btn-block" data-action="admin-login">Kirish</button>
+        </div>
+      </div>
+    </section>
+  `);
+}
+function renderAdminDashboard(){
+  return renderShell(`
+    <section class="block wrap">
+      <div class="section-head">
+        <div>
+          <h2>Xodim paneli</h2>
+          <p>Topshirilgan arizalarni ko'rib chiqing va yangiliklarni boshqaring.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-action="admin-logout">Chiqish</button>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn ${state.adminTab==='apps'?'active':''}" data-action="admin-tab" data-tab="apps">Arizalar</button>
+        <button class="tab-btn ${state.adminTab==='news'?'active':''}" data-action="admin-tab" data-tab="news">Yangiliklar boshqaruvi</button>
+      </div>
+      <div id="adminContent"><div class="empty">Yuklanmoqda...</div></div>
+    </section>
+  `);
+}
+async function renderAdminContent(){
+  const el = document.getElementById('adminContent');
+  if(!el) return;
+  if(state.adminTab==='apps'){
+    if(!state.appsLoaded) await loadApplications();
+    el.innerHTML = renderAdminApps();
+  } else {
+    if(!state.newsLoaded) await loadNews();
+    el.innerHTML = renderAdminNews();
+  }
+}
+function renderAdminApps(){
+  const all = state.apps;
+  const counts = {barchasi: all.length, yangi:0, korib_chiqilmoqda:0, qabul_qilindi:0, rad_etildi:0};
+  all.forEach(a=>{ if(counts[a.status]!==undefined) counts[a.status]++; });
+  let list = all;
+  if(state.filterStatus!=='barchasi'){ list = list.filter(a=>a.status===state.filterStatus); }
+  if(state.searchQuery){
+    const s = state.searchQuery.toLowerCase();
+    list = list.filter(a=> (a.fullName||'').toLowerCase().includes(s) || (a.phone||'').includes(s) || (a.id||'').toLowerCase().includes(s));
+  }
+  return `
+    <div class="stat-row">
+      <div class="stat-card"><div class="num">${counts.barchasi}</div><div class="lbl">Jami arizalar</div></div>
+      <div class="stat-card"><div class="num">${counts.yangi}</div><div class="lbl">Yangi</div></div>
+      <div class="stat-card"><div class="num">${counts.korib_chiqilmoqda}</div><div class="lbl">Ko'rib chiqilmoqda</div></div>
+      <div class="stat-card"><div class="num">${counts.qabul_qilindi}</div><div class="lbl">Qabul qilindi</div></div>
+      <div class="stat-card"><div class="num">${counts.rad_etildi}</div><div class="lbl">Rad etildi</div></div>
+    </div>
+    <div class="filter-row">
+      ${['barchasi','yangi','korib_chiqilmoqda','qabul_qilindi','rad_etildi'].map(s=>`<button class="filter-btn ${state.filterStatus===s?'active':''}" data-action="admin-filter" data-status="${s}">${s==='barchasi'?'Barchasi':esc(STATUS_LABELS[s])}</button>`).join('')}
+      <input type="text" class="search-input" id="adminSearch" placeholder="Ism yoki telefon bo'yicha qidirish" value="${esc(state.searchQuery)}">
+    </div>
+    ${list.length===0? `<div class="empty">Arizalar topilmadi.</div>` : `
+    <table class="app-table">
+      <thead><tr><th>F.I.Sh</th><th>Yo'nalish</th><th>Sinf</th><th>Telefon</th><th>Sana</th><th>Holat</th></tr></thead>
+      <tbody>
+        ${list.map(a=>`
+        <tr class="row-clickable" data-action="open-app" data-id="${esc(a.id)}">
+          <td>${esc(a.fullName)}</td>
+          <td>${esc(a.direction)}</td>
+          <td>${esc(a.level)}-sinf</td>
+          <td>${esc(a.phone)}</td>
+          <td>${esc(fmtDate(a.createdAt))}</td>
+          <td><span class="status-badge ${a.status}">${esc(STATUS_LABELS[a.status]||a.status)}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`}
+  `;
+}
+function renderAdminNews(){
+  return `
+    <div class="form-card" style="margin-bottom:24px;">
+      <h3 style="margin-top:0;font-size:16px;">Yangi e'lon qo'shish</h3>
+      <div class="field">
+        <label>Sarlavha</label>
+        <input type="text" id="newsTitle" placeholder="E'lon sarlavhasi">
+      </div>
+      <div class="field">
+        <label>Matn</label>
+        <textarea id="newsBody" placeholder="E'lon matni"></textarea>
+      </div>
+      <button class="btn btn-primary" data-action="add-news">E'lonni chop etish</button>
+    </div>
+    <div id="newsAdminList">
+      ${state.news.length===0? `<div class="empty">Hozircha yangiliklar yo'q.</div>` : state.news.map(n=>`
+        <div class="news-admin-item">
+          <div>
+            <h4>${esc(n.title)}</h4>
+            <p>${esc(n.body)}</p>
+            <p style="margin-top:6px;color:var(--muted);font-size:11.5px;">${esc(new Date(n.createdAt).toLocaleString('uz-UZ'))}</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-action="delete-news" data-id="${esc(n.id)}">O'chirish</button>
+        </div>`).join('')}
+    </div>
+  `;
+}
+function renderAppModal(app){
+  const docIsImg = (app.docMime||'').startsWith('image/');
+  return `
+  <div class="modal-overlay" data-action="close-modal">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3>${esc(app.fullName)}</h3>
+        <button class="modal-close" data-action="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-row"><span class="k">Ariza raqami</span><span class="v">${esc(app.id)}</span></div>
+        <div class="detail-row"><span class="k">Yo'nalish</span><span class="v">${esc(app.direction)}</span></div>
+        <div class="detail-row"><span class="k">Sinf / Ta'lim shakli</span><span class="v">${esc(app.level)}-sinf · ${esc(app.mode)}</span></div>
+        <div class="detail-row"><span class="k">Tug'ilgan sana</span><span class="v">${esc(app.birthDate||'-')}</span></div>
+        <div class="detail-row"><span class="k">Telefon</span><span class="v">${esc(app.phone)}</span></div>
+        <div class="detail-row"><span class="k">Hujjat turi</span><span class="v">${esc(app.docType)}</span></div>
+        <div class="detail-row"><span class="k">Topshirilgan sana</span><span class="v">${esc(fmtDate(app.createdAt))}</span></div>
+        <div class="doc-preview-grid">
+          <div class="doc-box">
+            <div class="doc-label">Hujjat</div>
+            ${docIsImg ? `<img src="${app.docImgUrl}">` : `<div style="padding:30px 0;color:var(--muted);font-size:13px;">PDF/Hujjat fayli</div>`}
+            <a class="btn btn-ghost btn-sm" href="${app.docViewUrl}" target="_blank">Ko'rish / yuklab olish</a>
+          </div>
+          <div class="doc-box">
+            <div class="doc-label">3:4 rasm</div>
+            <img src="${app.photoUrl}">
+            <a class="btn btn-ghost btn-sm" href="${app.photoUrl}" target="_blank">Yuklab olish</a>
+          </div>
+        </div>
+        <div class="field">
+          <label>Holatni o'zgartirish</label>
+          <div class="status-actions">
+            <button class="btn btn-sm ${app.status==='korib_chiqilmoqda'?'btn-primary':'btn-ghost'}" data-action="set-status" data-id="${esc(app.id)}" data-status="korib_chiqilmoqda">Ko'rib chiqilmoqda</button>
+            <button class="btn btn-sm ${app.status==='qabul_qilindi'?'btn-primary':'btn-ghost'}" data-action="set-status" data-id="${esc(app.id)}" data-status="qabul_qilindi">Qabul qilindi</button>
+            <button class="btn btn-sm ${app.status==='rad_etildi'?'btn-primary':'btn-ghost'}" data-action="set-status" data-id="${esc(app.id)}" data-status="rad_etildi">Rad etildi</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Izoh (ixtiyoriy)</label>
+          <textarea id="adminNoteText">${esc(app.adminNote||'')}</textarea>
+          <button class="btn btn-ghost btn-sm" style="margin-top:8px;" data-action="save-note" data-id="${esc(app.id)}">Izohni saqlash</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+/* ---------------- main render dispatch ---------------- */
+function renderApp(){
+  const app = document.getElementById('app');
+  let html = '';
+  if(state.view==='home') html = renderHome();
+  else if(state.view==='apply') html = renderApply();
+  else if(state.view==='success') html = renderSuccess(state.lastRef);
+  else if(state.view==='admin'){
+    html = state.isAdmin ? renderAdminDashboard() : renderAdminLogin(state.adminError);
+  }
+  app.innerHTML = html;
+  if(state.view==='home'){ renderNewsSection(); }
+  if(state.view==='admin' && state.isAdmin){ renderAdminContent(); }
+  const oldModal = document.getElementById('appModalHost');
+  if(oldModal) oldModal.remove();
+  if(state.openAppId){
+    const a = state.apps.find(x=>x.id===state.openAppId);
+    if(a){
+      const div = document.createElement('div');
+      div.id = 'appModalHost';
+      div.innerHTML = renderAppModal(a);
+      document.body.appendChild(div);
+    }
+  }
+}
+function closeModal(){
+  const el = document.getElementById('appModalHost');
+  if(el) el.remove();
+  state.openAppId = null;
+}
+/* ---------------- file handling ---------------- */
+function readFileAsDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = ()=>resolve(r.result);
+    r.onerror = ()=>reject(new Error('read failed'));
+    r.readAsDataURL(file);
+  });
+}
+function loadImage(src){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    img.onload = ()=>resolve(img);
+    img.onerror = ()=>reject(new Error('image load failed'));
+    img.src = src;
+  });
+}
+async function compressImage(dataUrl, maxWidth, quality){
+  try{
+    const img = await loadImage(dataUrl);
+    const scale = Math.min(1, maxWidth / img.width);
+    const w = Math.round(img.width * scale);
+    const h = Math.round(img.height * scale);
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL('image/jpeg', quality);
+  }catch(e){
+    return dataUrl;
+  }
+}
+async function handleFileChange(inputEl){
+  const role = inputEl.getAttribute('data-file-role');
+  const file = inputEl.files && inputEl.files[0];
+  if(!file) return;
+  const isImage = file.type.startsWith('image/');
+  if(role==='doc'){
+    if(!isImage && file.type!=='application/pdf'){
+      toast("Faqat rasm yoki PDF fayl yuklashingiz mumkin.");
+      inputEl.value='';
+      return;
+    }
+    if(file.size > 8*1024*1024){
+      toast("Fayl hajmi juda katta. Iltimos 8MB dan kichik fayl tanlang.");
+      inputEl.value='';
+      return;
+    }
+    let dataUrl = await readFileAsDataURL(file);
+    if(isImage){ dataUrl = await compressImage(dataUrl, 1100, 0.8); }
+    formFiles.docData = dataUrl;
+    formFiles.docName = file.name;
+    formFiles.docMime = isImage ? 'image/jpeg' : 'application/pdf';
+    const prev = document.getElementById('docPreview');
+    prev.innerHTML = `<div class="upload-preview">${isImage?`<img src="${dataUrl}">`:'<div style="width:64px;height:64px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;">PDF</div>'}<div class="fname">${esc(file.name)}</div></div>`;
+  } else if(role==='photo'){
+    if(!isImage){
+      toast("Iltimos rasm fayl tanlang.");
+      inputEl.value='';
+      return;
+    }
+    if(file.size > 8*1024*1024){
+      toast("Rasm hajmi juda katta. Iltimos 8MB dan kichik rasm tanlang.");
+      inputEl.value='';
+      return;
+    }
+    let dataUrl = await readFileAsDataURL(file);
+    dataUrl = await compressImage(dataUrl, 480, 0.82);
+    formFiles.photoData = dataUrl;
+    const prev = document.getElementById('photoPreview');
+    prev.innerHTML = `<div class="upload-preview"><img src="${dataUrl}"><div class="fname">${esc(file.name)}</div></div>`;
+  }
+}
+/* ---------------- hidden form submission helper ---------------- */
+function submitFormViaHiddenForm(record) {
+  let iframe = q('#hidden_iframe');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = 'hidden_iframe';
+    iframe.name = 'hidden_iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+  
+  let form = q('#submitAppForm');
+  if (!form) {
+    form = document.createElement('form');
+    form.id = 'submitAppForm';
+    form.action = APPS_SCRIPT_URL;
+    form.method = 'POST';
+    form.target = 'hidden_iframe';
+    form.style.display = 'none';
+    document.body.appendChild(form);
+  }
+  
+  form.innerHTML = '';
+  
+  const fields = {
+    action: 'submitApplication',
+    id: record.id,
+    fullName: record.fullName,
+    birthDate: record.birthDate,
+    phone: record.phone,
+    direction: record.direction,
+    level: record.level,
+    mode: record.mode,
+    docType: record.docType,
+    docName: record.docName,
+    docMime: record.docMime,
+    docData: record.docData,
+    photoData: record.photoData
+  };
+  
+  Object.keys(fields).forEach(key => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = fields[key] || '';
+    form.appendChild(input);
+  });
+  
+  form.submit();
+}
+/* ---------------- actions ---------------- */
+async function submitApplication(){
+  const btn = document.getElementById('submitAppBtn');
+  const fullName = document.getElementById('fFullName').value.trim();
+  const birthDate = document.getElementById('fBirthDate').value;
+  const phone = document.getElementById('fPhone').value.trim();
+  const docType = document.getElementById('fDocType').value;
+  const consent = document.getElementById('fConsent').checked;
+  const errEl = document.getElementById('formError');
+  errEl.innerHTML = '';
+  const errors = [];
+  if(!fullName) errors.push("F.I.Sh maydonini to'ldiring.");
+  if(!birthDate) errors.push("Tug'ilgan sanani kiriting.");
+  if(!phone || phone.replace(/\D/g,'').length < 9) errors.push("Telefon raqamni to'g'ri kiriting.");
+  if(!formFiles.docData) errors.push("Shaxsni tasdiqlovchi hujjat faylini yuklang.");
+  if(!formFiles.photoData) errors.push("3:4 rasmni yuklang.");
+  if(!consent) errors.push("Shaxsiy ma'lumotlarni qayta ishlashga rozilik berishingiz kerak.");
+  if(errors.length){
+    errEl.innerHTML = `<div class="form-error">${errors.map(esc).join('<br>')}</div>`;
+    errEl.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Yuborilmoqda...';
+  const dir = DIRECTIONS.find(d=>d.id===state.selectedDirection);
+  const id = genId();
+  const record = {
+    id,
+    fullName,
+    birthDate,
+    phone,
+    docType,
+    direction: dir.title,
+    level: dir.level,
+    mode: dir.mode,
+    docData: formFiles.docData,
+    docName: formFiles.docName,
+    docMime: formFiles.docMime,
+    photoData: formFiles.photoData
+  };
+  
+  // Submit the form
+  submitFormViaHiddenForm(record);
+  
+  // Poll status via GET checkStatus
+  let pollCount = 0;
+  const maxPolls = 20; // 40 seconds max
+  const pollInterval = setInterval(async () => {
+    pollCount++;
+    const res = await apiGet({action: 'checkStatus', id: id});
+    if(res && res.application) {
+      clearInterval(pollInterval);
+      state.appsLoaded = false;
+      state.lastRef = id;
+      state.view = 'success';
+      renderApp();
+    } else if(pollCount >= maxPolls) {
+      clearInterval(pollInterval);
+      // Timeout fallback: show success anyway
+      state.appsLoaded = false;
+      state.lastRef = id;
+      state.view = 'success';
+      renderApp();
+    }
+  }, 2000);
+}
+async function checkStatus(){
+  const input = document.getElementById('statusIdInput');
+  const resultEl = document.getElementById('statusResult');
+  const id = input.value.trim();
+  if(!id){ resultEl.innerHTML = `<div class="status-result">Iltimos ariza raqamini kiriting.</div>`; return; }
+  resultEl.innerHTML = `<div class="status-result">Tekshirilmoqda...</div>`;
+  const res = await apiGet({action: 'checkStatus', id: id});
+  if(res && res.application){
+    const a = res.application;
+    resultEl.innerHTML = `<div class="status-result"><b>${esc(a.fullName)}</b> — ${esc(a.direction)}<br>Holat: <span class="status-badge ${a.status}">${esc(STATUS_LABELS[a.status]||a.status)}</span>${a.adminNote?`<br>Izoh: ${esc(a.adminNote)}`:''}</div>`;
+  } else {
+    resultEl.innerHTML = `<div class="status-result">Bunday ariza topilmadi. Ariza raqamini tekshirib qaytadan urinib ko'ring.</div>`;
+  }
+}
+async function adminLogin(){
+  const user = document.getElementById('adminUser').value.trim();
+  const pass = document.getElementById('adminPass').value;
+  const res = await apiGet({action: 'adminLogin', username: user, password: pass});
+  if(res && res.success && res.token){
+    state.isAdmin = true;
+    state.adminToken = res.token;
+    state.adminError = null;
+    state.appsLoaded = false;
+    state.newsLoaded = false;
+    renderApp();
+  } else {
+    state.adminError = "Login yoki parol noto'g'ri.";
+    renderApp();
+  }
+}
+async function setAppStatus(id, status){
+  const res = await apiGet({action: 'updateStatus', token: state.adminToken, id: id, status: status});
+  if(res && res.success){
+    const idx = state.apps.findIndex(a=>a.id===id);
+    if(idx>=0) {
+      state.apps[idx].status = status;
+    }
+    toast('Holat yangilandi.');
+    renderApp();
+  } else {
+    toast('Xatolik yuz berdi.');
+  }
+}
+async function saveNote(id){
+  const val = document.getElementById('adminNoteText').value;
+  const res = await apiGet({action: 'updateStatus', token: state.adminToken, id: id, adminNote: val});
+  if(res && res.success){
+    const idx = state.apps.findIndex(a=>a.id===id);
+    if(idx>=0) {
+      state.apps[idx].adminNote = val;
+    }
+    toast('Izoh saqlandi.');
+  } else {
+    toast('Xatolik yuz berdi.');
+  }
+}
+async function addNews(){
+  const title = document.getElementById('newsTitle').value.trim();
+  const body = document.getElementById('newsBody').value.trim();
+  if(!title || !body){ toast("Sarlavha va matnni to'ldiring."); return; }
+  const res = await apiGet({action: 'addNews', token: state.adminToken, title: title, body: body});
+  if(res && res.success){
+    state.newsLoaded = false;
+    await loadNews();
+    renderAdminContent();
+    toast("E'lon chop etildi.");
+  } else {
+    toast('Xatolik yuz berdi.');
+  }
+}
+async function deleteNews(id){
+  const res = await apiGet({action: 'deleteNews', token: state.adminToken, id: id});
+  if(res && res.success){
+    state.news = state.news.filter(n=>n.id!==id);
+    renderAdminContent();
+    toast("E'lon o'chirildi.");
+  } else {
+    toast('Xatolik yuz berdi.');
+  }
+}
+/* ---------------- event delegation ---------------- */
+document.addEventListener('click', async (e)=>{
+  const t = e.target.closest('[data-action]');
+  if(!t) return;
+  const action = t.getAttribute('data-action');
+  if(action==='go-home'){ state.view='home'; state.openAppId=null; renderApp(); window.scrollTo({top:0}); }
+  else if(action==='go-home-anchor'){
+    e.preventDefault();
+    const anchor = t.getAttribute('data-anchor');
+    if(state.view!=='home'){ state.view='home'; renderApp(); setTimeout(()=>{ const el=document.getElementById(anchor); if(el) el.scrollIntoView({behavior:'smooth'});}, 60); }
+    else { const el=document.getElementById(anchor); if(el) el.scrollIntoView({behavior:'smooth'}); }
+  }
+  else if(action==='apply'){ state.selectedDirection = t.getAttribute('data-dir'); state.view='apply'; renderApp(); window.scrollTo({top:0}); }
+  else if(action==='submit-app'){ submitApplication(); }
+  else if(action==='check-status'){ checkStatus(); }
+  else if(action==='go-admin'){ e.preventDefault(); state.view='admin'; state.adminError=null; renderApp(); window.scrollTo({top:0}); }
+  else if(action==='admin-login'){ adminLogin(); }
+  else if(action==='admin-logout'){ state.isAdmin=false; state.view='home'; renderApp(); }
+  else if(action==='admin-tab'){ state.adminTab = t.getAttribute('data-tab'); renderApp(); }
+  else if(action==='admin-filter'){ state.filterStatus = t.getAttribute('data-status'); renderAdminContent(); }
+  else if(action==='open-app'){ state.openAppId = t.getAttribute('data-id'); renderApp(); }
+  else if(action==='close-modal'){ closeModal(); }
+  else if(action==='set-status'){ setAppStatus(t.getAttribute('data-id'), t.getAttribute('data-status')); }
+  else if(action==='save-note'){ saveNote(t.getAttribute('data-id')); }
+  else if(action==='add-news'){ addNews(); }
+  else if(action==='delete-news'){ deleteNews(t.getAttribute('data-id')); }
+});
+document.addEventListener('change', (e)=>{
+  if(e.target.matches('[data-file-input], input[type=file][data-file-role]')){
+    handleFileChange(e.target);
+  }
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Enter' && e.target && e.target.id==='statusIdInput'){ checkStatus(); }
+  if(e.key==='Enter' && e.target && (e.target.id==='adminUser' || e.target.id==='adminPass')){ adminLogin(); }
+});
+document.addEventListener('input', (e)=>{
+  if(e.target && e.target.id==='adminSearch'){
+    state.searchQuery = e.target.value;
+    renderAdminContent();
+  }
+});
+/* ---------------- init ---------------- */
+renderApp();
+</script>
+</body>
+</html>
