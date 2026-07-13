@@ -791,7 +791,7 @@ function docBox(label, imgUrl, viewUrl, mime, downloadName){
 function renderAppModal(app){
   return `
   <div class="modal-overlay" data-action="close-modal">
-    <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-card">
       <div class="modal-head">
         <h3>${esc(app.fullName)}</h3>
         <button class="modal-close" data-action="close-modal">&times;</button>
@@ -1109,7 +1109,13 @@ document.addEventListener('click', async (e)=>{
   else if(action==='admin-tab'){ state.adminTab = t.getAttribute('data-tab'); renderApp(); }
   else if(action==='admin-filter'){ state.filterStatus = t.getAttribute('data-status'); renderAdminContent(); }
   else if(action==='open-app'){ state.openAppId = t.getAttribute('data-id'); renderApp(); }
-  else if(action==='close-modal'){ closeModal(); }
+  else if(action==='close-modal'){
+    if(t.classList.contains('modal-overlay') && e.target !== t){
+      /* click bubbled from inside the card interior — ignore */
+    } else {
+      closeModal();
+    }
+  }
   else if(action==='set-status'){ setAppStatus(t.getAttribute('data-id'), t.getAttribute('data-status')); }
   else if(action==='save-note'){ saveNote(t.getAttribute('data-id')); }
   else if(action==='add-news'){ addNews(); }
