@@ -843,6 +843,7 @@ function renderApp(){
   if(state.view==='home'){ renderNewsSection(); }
   if(state.view==='admin' && state.isAdmin){ renderAdminContent(); }
   const modalHost = document.getElementById('appModalHost');
+  if(modalHost) modalHost.remove();
   if(state.openAppId){
     const a = state.apps.find(x=>x.id===state.openAppId);
     if(a){
