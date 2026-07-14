@@ -1249,7 +1249,11 @@ async function deleteNews(id){
 async function saveHeroTag(){
   const val = document.getElementById('heroTagInput').value.trim();
   if(!val){ toast("Matnni kiriting."); return; }
-  await apiGet({action:'updateSettings', token: state.adminToken, key:'heroTag', value: val});
+  const r = await apiGet({action:'updateSettings', token: state.adminToken, key:'heroTag', value: val});
+  if(!r || !r.success){
+    toast("Saqlanmadi. Xato: " + (r ? (r.detail || r.error || 'nomaʼlum') : 'aloqa yoʼq') + " — Apps Script kodi qayta deploy qilinganini tekshiring.");
+    return;
+  }
   state.settings.heroTag = val;
   toast("Saqlandi.");
 }
@@ -1267,7 +1271,11 @@ async function addDirection(){
   const mode = readModeCheckboxes('dirModeKunduzgi', 'dirModeDual');
   if(!title){ toast("Yo'nalish nomini kiriting."); return; }
   if(!mode){ toast("Kamida bitta ta'lim shaklini tanlang."); return; }
-  await apiGet({action:'addDirection', token: state.adminToken, title, level, icon, mode});
+  const r = await apiGet({action:'addDirection', token: state.adminToken, title, level, icon, mode});
+  if(!r || !r.success){
+    toast("Qo'shilmadi. Xato: " + (r ? (r.detail || r.error || 'nomaʼlum') : 'aloqa yoʼq') + " — Apps Script kodi qayta deploy qilinganini tekshiring.");
+    return;
+  }
   state.directionsLoaded = false;
   await loadDirections();
   renderAdminContent();
@@ -1280,7 +1288,11 @@ async function saveDirection(id){
   const mode = readModeCheckboxes('editDirKunduzgi', 'editDirDual');
   if(!title){ toast("Yo'nalish nomini kiriting."); return; }
   if(!mode){ toast("Kamida bitta ta'lim shaklini tanlang."); return; }
-  await apiGet({action:'updateDirection', token: state.adminToken, id, title, level, icon, mode});
+  const r = await apiGet({action:'updateDirection', token: state.adminToken, id, title, level, icon, mode});
+  if(!r || !r.success){
+    toast("Saqlanmadi. Xato: " + (r ? (r.detail || r.error || 'nomaʼlum') : 'aloqa yoʼq') + " — Apps Script kodi qayta deploy qilinganini tekshiring.");
+    return;
+  }
   state.directionsLoaded = false;
   await loadDirections();
   closeDirModal();
@@ -1288,11 +1300,16 @@ async function saveDirection(id){
   toast("Yo'nalish yangilandi.");
 }
 async function deleteDirection(id){
-  await apiGet({action:'deleteDirection', token: state.adminToken, id});
+  const r = await apiGet({action:'deleteDirection', token: state.adminToken, id});
+  if(!r || !r.success){
+    toast("O'chirilmadi. Xato: " + (r ? (r.detail || r.error || 'nomaʼlum') : 'aloqa yoʼq') + " — Apps Script kodi qayta deploy qilinganini tekshiring.");
+    return;
+  }
   state.directions = state.directions.filter(d=>d.id!==id);
   renderAdminContent();
   toast("Yo'nalish o'chirildi.");
 }
+
 
 /* ---------------- event delegation ---------------- */
 document.addEventListener('click', async (e)=>{
