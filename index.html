@@ -258,7 +258,10 @@ table.app-table tr.row-clickable:hover{background:var(--cream);}
 
 <script>
 /* ---------------- data ---------------- */
-const DIRECTIONS = [
+/* Bular faqat backend hali yuklanmagan paytdagi zaxira (fallback) ro'yxati.
+   Haqiqiy yo'nalishlar ro'yxati endi Google Sheets orqali, xodim panelidan
+   boshqariladi (qo'shish/o'chirish/tahrirlash). */
+const FALLBACK_DIRECTIONS = [
   {id:'hotel9', level:9, title:"Mehmonxona menejeri", mode:"Kunduzgi", icon:"hotel"},
   {id:'chef9', level:9, title:"Oshpaz", mode:"Kunduzgi", icon:"chef"},
   {id:'plumb9', level:9, title:"Turar joy infratuzilmasi servisi (Santexnik)", mode:"Kunduzgi", icon:"plumb"},
@@ -341,11 +344,16 @@ const state = {
   adminTab: 'apps',
   apps: [],
   news: [],
+  directions: [],
+  settings: {heroTag: "Onlayn qabul jarayoni 2026"},
   appsLoaded: false,
   newsLoaded: false,
+  directionsLoaded: false,
+  settingsLoaded: false,
   filterStatus: 'barchasi',
   searchQuery: '',
   openAppId: null,
+  editingDirectionId: null,
 };
 const formFiles = {
   docData:null, docName:null, docMime:null,
@@ -394,6 +402,18 @@ async function loadNews(){
   const r = await apiGet({action:'listNews'});
   state.news = (r && r.news) ? r.news : [];
   state.newsLoaded = true;
+}
+async function loadDirections(){
+  if(!isBackendConfigured()){ state.directions = FALLBACK_DIRECTIONS; state.directionsLoaded = true; return; }
+  const r = await apiGet({action:'listDirections'});
+  state.directions = (r && r.directions && r.directions.length) ? r.directions : FALLBACK_DIRECTIONS;
+  state.directionsLoaded = true;
+}
+async function loadSettings(){
+  if(!isBackendConfigured()){ state.settingsLoaded = true; return; }
+  const r = await apiGet({action:'getSettings'});
+  state.settings = (r && r.settings) ? r.settings : state.settings;
+  state.settingsLoaded = true;
 }
 
 /* ---------------- render: shell ---------------- */
@@ -446,12 +466,10 @@ function ikatMark(){
 
 /* ---------------- render: home ---------------- */
 function renderHome(){
-  const g9 = DIRECTIONS.filter(d=>d.level===9);
-  const g11 = DIRECTIONS.filter(d=>d.level===11);
   return renderShell(`
     <section class="hero">
       <div class="hero-inner">
-        <div class="eyebrow">Onlayn qabul jarayoni 2026</div>
+        <div class="eyebrow" id="heroTagText">${esc(state.settings.heroTag || "Onlayn qabul jarayoni")}</div>
         <h1>Kelajakdagi kasbingizga birinchi qadam — shu yerdan boshlanadi</h1>
         <p class="lead">Marg'ilon turizm va madaniy meros texnikumiga hujjat topshirish endi onlayn. Yo'nalishni tanlang, hujjatlaringizni yuklang va natijani kuting — barchasi bir necha daqiqada.</p>
         <div class="hero-actions">
@@ -459,7 +477,7 @@ function renderHome(){
           <button class="btn" style="border-color:rgba(255,255,255,0.35);color:#fff" data-action="go-home-anchor" data-anchor="holat">Ariza holatini tekshirish</button>
         </div>
         <div class="hero-stats">
-          <div class="hero-stat"><div class="num">9</div><div class="lbl">ta'lim yo'nalishi</div></div>
+          <div class="hero-stat"><div class="num" id="statDirCount">${state.directions.length || 9}</div><div class="lbl">ta'lim yo'nalishi</div></div>
           <div class="hero-stat"><div class="num">2</div><div class="lbl">ta'lim shakli: Kunduzgi / Dual</div></div>
           <div class="hero-stat"><div class="num">100%</div><div class="lbl">onlayn hujjat topshirish</div></div>
         </div>
@@ -474,10 +492,12 @@ function renderHome(){
           <p>O'zingizga mos yo'nalishni tanlang va ariza topshirishni boshlang.</p>
         </div>
       </div>
-      <div class="group-label"><span>9-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
-      <div class="dir-grid">${g9.map(dirCard).join('')}</div>
-      <div class="group-label"><span>11-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
-      <div class="dir-grid">${g11.map(dirCard).join('')}</div>
+      <div id="directionsContainer">
+        <div class="group-label"><span>9-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+        <div class="dir-grid"><div class="empty">Yuklanmoqda...</div></div>
+        <div class="group-label"><span>11-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+        <div class="dir-grid"><div class="empty">Yuklanmoqda...</div></div>
+      </div>
     </section>
 
     <section class="block wrap">
@@ -548,10 +568,30 @@ async function renderNewsSection(){
       <p>${esc(n.body)}</p>
     </div>`).join('')}</div>`;
 }
+async function renderDirectionsSection(){
+  if(!state.settingsLoaded) await loadSettings();
+  const tagEl = document.getElementById('heroTagText');
+  if(tagEl) tagEl.textContent = state.settings.heroTag || "Onlayn qabul jarayoni";
+
+  if(!state.directionsLoaded) await loadDirections();
+  const countEl = document.getElementById('statDirCount');
+  if(countEl) countEl.textContent = state.directions.length;
+
+  const container = document.getElementById('directionsContainer');
+  if(!container) return;
+  const g9 = state.directions.filter(d=>Number(d.level)===9);
+  const g11 = state.directions.filter(d=>Number(d.level)===11);
+  container.innerHTML = `
+    <div class="group-label"><span>9-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+    <div class="dir-grid">${g9.length ? g9.map(dirCard).join('') : '<div class="empty">Hozircha yo\u2019nalish yo\u2019q.</div>'}</div>
+    <div class="group-label"><span>11-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+    <div class="dir-grid">${g11.length ? g11.map(dirCard).join('') : '<div class="empty">Hozircha yo\u2019nalish yo\u2019q.</div>'}</div>
+  `;
+}
 
 /* ---------------- render: apply form ---------------- */
 function renderApply(){
-  const dir = DIRECTIONS.find(d=>d.id===state.selectedDirection);
+  const dir = state.directions.find(d=>d.id===state.selectedDirection);
   if(!dir){ return renderHome(); }
   formFiles.docData=null; formFiles.docName=null; formFiles.docMime=null; formFiles.photoData=null;
   const modeOptions = dir.mode.split(' va ').map(m=>m.trim());
@@ -697,6 +737,7 @@ function renderAdminDashboard(){
       </div>
       <div class="tabs">
         <button class="tab-btn ${state.adminTab==='apps'?'active':''}" data-action="admin-tab" data-tab="apps">Arizalar</button>
+        <button class="tab-btn ${state.adminTab==='directions'?'active':''}" data-action="admin-tab" data-tab="directions">Yo'nalishlar</button>
         <button class="tab-btn ${state.adminTab==='news'?'active':''}" data-action="admin-tab" data-tab="news">Yangiliklar boshqaruvi</button>
       </div>
       <div id="adminContent"><div class="empty">Yuklanmoqda...</div></div>
@@ -709,6 +750,10 @@ async function renderAdminContent(){
   if(state.adminTab==='apps'){
     if(!state.appsLoaded) await loadApplications();
     el.innerHTML = renderAdminApps();
+  } else if(state.adminTab==='directions'){
+    if(!state.directionsLoaded) await loadDirections();
+    if(!state.settingsLoaded) await loadSettings();
+    el.innerHTML = renderAdminDirections();
   } else {
     if(!state.newsLoaded) await loadNews();
     el.innerHTML = renderAdminNews();
@@ -780,6 +825,104 @@ function renderAdminNews(){
     </div>
   `;
 }
+const ICON_OPTIONS = [
+  {v:'hotel', l:"Mehmonxona"}, {v:'chef', l:"Oshpazlik"}, {v:'plumb', l:"Santexnika"},
+  {v:'restaurant', l:"Restoran"}, {v:'jewelry', l:"Zargarlik"}, {v:'it', l:"IT / kompyuter"},
+  {v:'tourism', l:"Turizm"}, {v:'drone', l:"Dron / uchish qurilmasi"},
+];
+function renderAdminDirections(){
+  return `
+    <div class="form-card" style="margin-bottom:24px;">
+      <h3 style="margin-top:0;font-size:16px;">Bosh sahifadagi belgi matni</h3>
+      <p style="color:var(--muted);font-size:13px;margin-top:-6px;">Masalan: "Onlayn qabul jarayoni 2026"</p>
+      <div class="field">
+        <input type="text" id="heroTagInput" value="${esc(state.settings.heroTag||'')}">
+      </div>
+      <button class="btn btn-ghost btn-sm" data-action="save-hero-tag">Saqlash</button>
+    </div>
+    <div class="form-card" style="margin-bottom:24px;">
+      <h3 style="margin-top:0;font-size:16px;">Yangi yo'nalish qo'shish</h3>
+      <div class="field">
+        <label>Yo'nalish nomi</label>
+        <input type="text" id="dirTitleInput" placeholder="Masalan: Sartaroshlik">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Kimlar uchun</label>
+          <select id="dirLevelInput">
+            <option value="9">9-sinf bitiruvchilari uchun</option>
+            <option value="11">11-sinf bitiruvchilari uchun</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Belgi (icon)</label>
+          <select id="dirIconInput">${ICON_OPTIONS.map(o=>`<option value="${o.v}">${esc(o.l)}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="field checkbox-row" style="gap:22px;">
+        <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-deep);"><input type="checkbox" id="dirModeKunduzgi" checked> Kunduzgi</label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-deep);"><input type="checkbox" id="dirModeDual"> Dual</label>
+      </div>
+      <button class="btn btn-primary" data-action="add-direction">Yo'nalish qo'shish</button>
+    </div>
+    <div class="group-label"><span>9-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+    ${renderDirAdminList(9)}
+    <div class="group-label"><span>11-sinf bitiruvchilari uchun</span><div class="rule"></div></div>
+    ${renderDirAdminList(11)}
+  `;
+}
+function renderDirAdminList(level){
+  const items = state.directions.filter(d=>Number(d.level)===level);
+  if(items.length===0) return `<div class="empty">Bu bo'limda yo'nalishlar yo'q.</div>`;
+  return items.map(d=>`
+    <div class="news-admin-item">
+      <div>
+        <h4>${esc(d.title)}</h4>
+        <p>${esc(d.mode)}</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button class="btn btn-ghost btn-sm" data-action="edit-direction" data-id="${esc(d.id)}">Tahrirlash</button>
+        <button class="btn btn-ghost btn-sm" data-action="delete-direction" data-id="${esc(d.id)}">O'chirish</button>
+      </div>
+    </div>`).join('');
+}
+function renderDirModal(d){
+  const isDual = (d.mode||'').indexOf('Dual')>=0;
+  const isKunduzgi = (d.mode||'').indexOf('Kunduzgi')>=0;
+  return `
+  <div class="modal-overlay" data-action="close-dir-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Yo'nalishni tahrirlash</h3>
+        <button class="modal-close" data-action="close-dir-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>Yo'nalish nomi</label>
+          <input type="text" id="editDirTitle" value="${esc(d.title)}">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Kimlar uchun</label>
+            <select id="editDirLevel">
+              <option value="9" ${Number(d.level)===9?'selected':''}>9-sinf bitiruvchilari uchun</option>
+              <option value="11" ${Number(d.level)===11?'selected':''}>11-sinf bitiruvchilari uchun</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Belgi (icon)</label>
+            <select id="editDirIcon">${ICON_OPTIONS.map(o=>`<option value="${o.v}" ${d.icon===o.v?'selected':''}>${esc(o.l)}</option>`).join('')}</select>
+          </div>
+        </div>
+        <div class="field checkbox-row" style="gap:22px;">
+          <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-deep);"><input type="checkbox" id="editDirKunduzgi" ${isKunduzgi?'checked':''}> Kunduzgi</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-deep);"><input type="checkbox" id="editDirDual" ${isDual?'checked':''}> Dual</label>
+        </div>
+        <button class="btn btn-primary btn-block" data-action="save-direction" data-id="${esc(d.id)}">Saqlash</button>
+      </div>
+    </div>
+  </div>`;
+}
 function docBox(label, imgUrl, viewUrl, mime, downloadName){
   const isImg = (mime||'').startsWith('image/');
   return `<div class="doc-box">
@@ -840,7 +983,7 @@ function renderApp(){
     html = state.isAdmin ? renderAdminDashboard() : renderAdminLogin(state.adminError);
   }
   app.innerHTML = html;
-  if(state.view==='home'){ renderNewsSection(); }
+  if(state.view==='home'){ renderNewsSection(); renderDirectionsSection(); }
   if(state.view==='admin' && state.isAdmin){ renderAdminContent(); }
   const modalHost = document.getElementById('appModalHost');
   if(modalHost) modalHost.remove();
@@ -853,11 +996,27 @@ function renderApp(){
       document.body.appendChild(div);
     }
   }
+  const dirModalHost = document.getElementById('dirModalHost');
+  if(dirModalHost) dirModalHost.remove();
+  if(state.editingDirectionId){
+    const d = state.directions.find(x=>x.id===state.editingDirectionId);
+    if(d){
+      const div = document.createElement('div');
+      div.id = 'dirModalHost';
+      div.innerHTML = renderDirModal(d);
+      document.body.appendChild(div);
+    }
+  }
 }
 function closeModal(){
   const el = document.getElementById('appModalHost');
   if(el) el.remove();
   state.openAppId = null;
+}
+function closeDirModal(){
+  const el = document.getElementById('dirModalHost');
+  if(el) el.remove();
+  state.editingDirectionId = null;
 }
 
 /* ---------------- file handling ---------------- */
@@ -976,7 +1135,7 @@ async function submitApplication(){
   btn.disabled = true;
   btn.textContent = 'Yuborilmoqda...';
 
-  const dir = DIRECTIONS.find(d=>d.id===state.selectedDirection);
+  const dir = state.directions.find(d=>d.id===state.selectedDirection);
   const modeEl = document.getElementById('fMode');
   const chosenMode = modeEl ? modeEl.value : dir.mode;
   const id = genId();
@@ -1087,6 +1246,53 @@ async function deleteNews(id){
   renderAdminContent();
   toast("E'lon o'chirildi.");
 }
+async function saveHeroTag(){
+  const val = document.getElementById('heroTagInput').value.trim();
+  if(!val){ toast("Matnni kiriting."); return; }
+  await apiGet({action:'updateSettings', token: state.adminToken, key:'heroTag', value: val});
+  state.settings.heroTag = val;
+  toast("Saqlandi.");
+}
+function readModeCheckboxes(kunduzgiId, dualId){
+  const kunduzgi = document.getElementById(kunduzgiId).checked;
+  const dual = document.getElementById(dualId).checked;
+  if(!kunduzgi && !dual) return null;
+  if(kunduzgi && dual) return 'Kunduzgi va Dual';
+  return dual ? 'Dual' : 'Kunduzgi';
+}
+async function addDirection(){
+  const title = document.getElementById('dirTitleInput').value.trim();
+  const level = document.getElementById('dirLevelInput').value;
+  const icon = document.getElementById('dirIconInput').value;
+  const mode = readModeCheckboxes('dirModeKunduzgi', 'dirModeDual');
+  if(!title){ toast("Yo'nalish nomini kiriting."); return; }
+  if(!mode){ toast("Kamida bitta ta'lim shaklini tanlang."); return; }
+  await apiGet({action:'addDirection', token: state.adminToken, title, level, icon, mode});
+  state.directionsLoaded = false;
+  await loadDirections();
+  renderAdminContent();
+  toast("Yo'nalish qo'shildi.");
+}
+async function saveDirection(id){
+  const title = document.getElementById('editDirTitle').value.trim();
+  const level = document.getElementById('editDirLevel').value;
+  const icon = document.getElementById('editDirIcon').value;
+  const mode = readModeCheckboxes('editDirKunduzgi', 'editDirDual');
+  if(!title){ toast("Yo'nalish nomini kiriting."); return; }
+  if(!mode){ toast("Kamida bitta ta'lim shaklini tanlang."); return; }
+  await apiGet({action:'updateDirection', token: state.adminToken, id, title, level, icon, mode});
+  state.directionsLoaded = false;
+  await loadDirections();
+  closeDirModal();
+  renderAdminContent();
+  toast("Yo'nalish yangilandi.");
+}
+async function deleteDirection(id){
+  await apiGet({action:'deleteDirection', token: state.adminToken, id});
+  state.directions = state.directions.filter(d=>d.id!==id);
+  renderAdminContent();
+  toast("Yo'nalish o'chirildi.");
+}
 
 /* ---------------- event delegation ---------------- */
 document.addEventListener('click', async (e)=>{
@@ -1120,6 +1326,18 @@ document.addEventListener('click', async (e)=>{
   else if(action==='save-note'){ saveNote(t.getAttribute('data-id')); }
   else if(action==='add-news'){ addNews(); }
   else if(action==='delete-news'){ deleteNews(t.getAttribute('data-id')); }
+  else if(action==='save-hero-tag'){ saveHeroTag(); }
+  else if(action==='add-direction'){ addDirection(); }
+  else if(action==='edit-direction'){ state.editingDirectionId = t.getAttribute('data-id'); renderApp(); }
+  else if(action==='save-direction'){ saveDirection(t.getAttribute('data-id')); }
+  else if(action==='delete-direction'){ deleteDirection(t.getAttribute('data-id')); }
+  else if(action==='close-dir-modal'){
+    if(t.classList.contains('modal-overlay') && e.target !== t){
+      /* click bubbled from inside the card interior — ignore */
+    } else {
+      closeDirModal();
+    }
+  }
 });
 document.addEventListener('change', (e)=>{
   if(e.target.matches('[data-file-input], input[type=file][data-file-role]')){
@@ -1133,7 +1351,14 @@ document.addEventListener('keydown', (e)=>{
 document.addEventListener('input', (e)=>{
   if(e.target && e.target.id==='adminSearch'){
     state.searchQuery = e.target.value;
-    renderAdminContent();
+    const cursorPos = e.target.selectionStart;
+    renderAdminContent().then(()=>{
+      const freshInput = document.getElementById('adminSearch');
+      if(freshInput){
+        freshInput.focus();
+        try{ freshInput.setSelectionRange(cursorPos, cursorPos); }catch(err){}
+      }
+    });
   }
 });
 
